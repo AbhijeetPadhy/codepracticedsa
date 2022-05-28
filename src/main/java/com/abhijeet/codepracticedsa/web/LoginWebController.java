@@ -21,12 +21,12 @@ public class LoginWebController {
     }
     @GetMapping("/login")
     public String loginForm(Model model){
-        model.addAttribute("userLoginInput", new UserLoginInput());
         if(LoginState.isIsAuthenticated()){
             UserEntry userEntry = LoginState.getUserEntry();
             model.addAttribute("userEntry", userEntry);
             return "dashboard";
         }
+        model.addAttribute("userLoginInput", new UserLoginInput());
         model.addAttribute("alertType", "info");
         model.addAttribute("alertMessage", "Fill in the details to login for this site!");
         return "login";

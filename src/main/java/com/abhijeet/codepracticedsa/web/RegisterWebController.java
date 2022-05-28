@@ -25,6 +25,11 @@ public class RegisterWebController {
 
     @GetMapping("/register")
     public String registerForm(Model model){
+        if(LoginState.isIsAuthenticated()){
+            UserEntry userEntry = LoginState.getUserEntry();
+            model.addAttribute("userEntry", userEntry);
+            return "dashboard";
+        }
         model.addAttribute("userRegisterInput", new UserRegisterInput());
         model.addAttribute("alertType", "info");
         model.addAttribute("alertMessage", "Fill in the details to register for this site!");
