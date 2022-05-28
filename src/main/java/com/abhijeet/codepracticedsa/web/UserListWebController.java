@@ -30,6 +30,8 @@ public class UserListWebController {
             return "users";
         }
         model.addAttribute("userLoginInput", new UserLoginInput());
+        model.addAttribute("alertType", "warning");
+        model.addAttribute("alertMessage", "Cannot access Users! Please Log In.");
         return "login";
     }
 }

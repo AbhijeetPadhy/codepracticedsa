@@ -22,6 +22,8 @@ public class LoginWebController {
     @GetMapping("/login")
     public String loginForm(Model model){
         model.addAttribute("userLoginInput", new UserLoginInput());
+        model.addAttribute("alertType", "info");
+        model.addAttribute("alertMessage", "Fill in the details to login for this site!");
         return "login";
     }
     @PostMapping("/login")
@@ -43,6 +45,8 @@ public class LoginWebController {
             return "dashboard";
         }
         LoginState.unsetAuthentication();
+        model.addAttribute("alertType", "danger");
+        model.addAttribute("alertMessage", "Could not authenticate! Please Log In Again.");
         return "login";
     }
 }

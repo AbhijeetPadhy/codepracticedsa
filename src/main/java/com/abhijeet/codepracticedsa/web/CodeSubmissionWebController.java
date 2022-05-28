@@ -31,6 +31,8 @@ public class CodeSubmissionWebController {
             return "submissions";
         }
         model.addAttribute("userLoginInput", new UserLoginInput());
+        model.addAttribute("alertType", "warning");
+        model.addAttribute("alertMessage", "Cannot access Submissions! Please Log In.");
         return "login";
     }
 
@@ -44,6 +46,8 @@ public class CodeSubmissionWebController {
             return "submissions";
         }
         model.addAttribute("userLoginInput", new UserLoginInput());
+        model.addAttribute("alertType", "warning");
+        model.addAttribute("alertMessage", "Cannot access Submissions! Please Log In.");
         return "login";
     }
 }

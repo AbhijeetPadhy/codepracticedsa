@@ -61,4 +61,10 @@ public class UserEntry {
             return true;
         return false;
     }
+
+    public boolean isSameUser(String email){
+        if(this.email.equals(email))
+            return true;
+        return false;
+    }
 }

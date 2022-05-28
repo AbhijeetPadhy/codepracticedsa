@@ -1,29 +1,13 @@
-package com.abhijeet.codepracticedsa.data.entity;
+package com.abhijeet.codepracticedsa.web;
 
-import javax.persistence.*;
-
-@Entity
-@Table(name="USERS")
-public class Users {
-    @Id
-    @Column(name = "USER_ID", nullable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class UserRegisterInput {
     private long userId;
-
-    @Column(name = "FIRSTNAME")
     private String firstName;
-
-    @Column(name = "LASTNAME")
     private String lastName;
-
-    @Column(name = "EMAIL")
     private String email;
-
-    @Column(name = "PASSWORD")
-    private String password;
-
-    @Column(name = "LANGPREF")
     private String langPref;
+    private String password;
+    private String confirmPassword;
 
     public long getUserId() {
         return userId;
@@ -57,6 +41,14 @@ public class Users {
         this.email = email;
     }
 
+    public String getLangPref() {
+        return langPref;
+    }
+
+    public void setLangPref(String langPref) {
+        this.langPref = langPref;
+    }
+
     public String getPassword() {
         return password;
     }
@@ -65,11 +57,11 @@ public class Users {
         this.password = password;
     }
 
-    public String getLangPref() {
-        return langPref;
+    public String getConfirmPassword() {
+        return confirmPassword;
     }
 
-    public void setLangPref(String langPref) {
-        this.langPref = langPref;
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
     }
 }
