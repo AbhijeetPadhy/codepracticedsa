@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
     <head>
         <title>One Page Wonder - Start Bootstrap Template</title>
         <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
@@ -19,8 +19,18 @@
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ms-auto">
-                        <li class="nav-item"><a class="nav-link" th:href="${isAuthenticated}? '' : '/register'" th:text="${isAuthenticated}? '' : 'Sign Up'"></a></li>
-                        <li class="nav-item"><a class="nav-link" th:href="${isAuthenticated}? '/dashboard' : '/login'" th:text="${isAuthenticated}? 'Dashboard' : 'Log In'"></a></li>
+                        <li class="nav-item" sec:authorize="isAnonymous()">
+                            <a class="nav-link" th:href="@{/register}">Sign Up</a>
+                        </li>
+                        <li class="nav-item" sec:authorize="isAnonymous()">
+                            <a class="nav-link" th:href="@{/login}">Login</a>
+                        </li>
+                        <li class="nav-item" sec:authorize="isAuthenticated()">
+                            <a class="nav-link" th:href="@{/dashboard}">Dashboard</a>
+                        </li>
+                        <li class="nav-item" sec:authorize="isAuthenticated()">
+                            <a class="nav-link" th:href="@{/logout}">Logout</a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -31,7 +41,12 @@
                 <div class="container px-5">
                     <h1 class="masthead-heading mb-0">YourCode</h1>
                     <h2 class="masthead-subheading mb-0">a place for digital notes of your dsa prep!</h2>
-                    <a class="btn btn-primary btn-xl rounded-pill mt-5" href="#scroll">Learn More</a>
+                    <a class="btn btn-primary btn-xl rounded-pill mt-5" href="#scroll" sec:authorize="isAnonymous()">
+                        Learn More
+                    </a>
+                    <a class="btn btn-primary btn-xl rounded-pill mt-5" href="dashboard" sec:authorize="isAuthenticated()">
+                        Open Dashboard
+                    </a>
                 </div>
             </div>
             <div class="bg-circle-1 bg-circle"></div>

@@ -2,7 +2,10 @@ package com.abhijeet.codepracticedsa.web;
 
 import com.abhijeet.codepracticedsa.submission.domain.UserEntry;
 import com.abhijeet.codepracticedsa.submission.service.UserService;
+import com.abhijeet.codepracticedsa.web.security.UserPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,14 +23,10 @@ public class DashboardWebController {
 
     @GetMapping
     public String displayDashboard(Model model){
-        if(LoginState.isIsAuthenticated()){
-            UserEntry userEntry = LoginState.getUserEntry();
-            model.addAttribute("userEntry", userEntry);
-            return "dashboard";
-        }
-        model.addAttribute("userLoginInput", new UserLoginInput());
-        model.addAttribute("alertType", "warning");
-        model.addAttribute("alertMessage", "Cannot access Dashboard! Please Log In.");
-        return "login";
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserPrincipal userPrincipal = (UserPrincipal)authentication.getPrincipal();
+        model.addAttribute("firstName", userPrincipal.getUser().getFirstName());
+        model.addAttribute("lastName", userPrincipal.getUser().getLastName());
+        return "dashboard";
     }
 }

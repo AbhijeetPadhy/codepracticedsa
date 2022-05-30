@@ -1,10 +1,12 @@
 package com.abhijeet.codepracticedsa.data.entity;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name="USERS")
-public class Users {
+public class User {
     @Id
     @Column(name = "USER_ID", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,8 +18,8 @@ public class Users {
     @Column(name = "LASTNAME")
     private String lastName;
 
-    @Column(name = "EMAIL")
-    private String email;
+    @Column(name = "USERNAME")
+    private String username;
 
     @Column(name = "PASSWORD")
     private String password;
@@ -50,11 +52,11 @@ public class Users {
     }
 
     public String getEmail() {
-        return email;
+        return getUsername();
     }
 
     public void setEmail(String email) {
-        this.email = email;
+        setUsername(email);
     }
 
     public String getPassword() {
@@ -62,7 +64,7 @@ public class Users {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.password = (new BCryptPasswordEncoder(11)).encode(password);
     }
 
     public String getLangPref() {
@@ -71,5 +73,13 @@ public class Users {
 
     public void setLangPref(String langPref) {
         this.langPref = langPref;
+    }
+
+    public String getUsername(){
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

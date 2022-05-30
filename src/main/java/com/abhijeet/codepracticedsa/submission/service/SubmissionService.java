@@ -2,25 +2,22 @@ package com.abhijeet.codepracticedsa.submission.service;
 
 import com.abhijeet.codepracticedsa.data.entity.Code;
 import com.abhijeet.codepracticedsa.data.repository.CodeRepository;
-import com.abhijeet.codepracticedsa.data.repository.UsersRepository;
+import com.abhijeet.codepracticedsa.data.repository.UserRepository;
 import com.abhijeet.codepracticedsa.submission.domain.CodeSubmission;
 import com.abhijeet.codepracticedsa.web.CodeSubmitInput;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class SubmissionService {
     private final CodeRepository codeRepository;
-    private final UsersRepository usersRepository;
+    private final UserRepository userRepository;
 
-    public SubmissionService(CodeRepository codeRepository, UsersRepository usersRepository) {
+    public SubmissionService(CodeRepository codeRepository, UserRepository userRepository) {
         this.codeRepository = codeRepository;
-        this.usersRepository = usersRepository;
+        this.userRepository = userRepository;
     }
 
     public List<CodeSubmission> getCodeSubmissions(String userString){

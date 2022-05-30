@@ -1,9 +1,13 @@
 package com.abhijeet.codepracticedsa.web;
 
-import com.abhijeet.codepracticedsa.data.repository.UsersRepository;
+import com.abhijeet.codepracticedsa.data.repository.UserRepository;
 import com.abhijeet.codepracticedsa.submission.domain.UserEntry;
 import com.abhijeet.codepracticedsa.submission.service.UserService;
+import com.abhijeet.codepracticedsa.web.security.UserPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,20 +19,27 @@ import java.util.List;
 @Controller
 public class RegisterWebController {
     private final UserService userService;
-    private final UsersRepository usersRepository;
+    private final UserRepository userRepository;
 
     @Autowired
-    public RegisterWebController(UserService userService, UsersRepository usersRepository) {
+    public RegisterWebController(UserService userService, UserRepository userRepository) {
         this.userService = userService;
-        this.usersRepository = usersRepository;
+        this.userRepository = userRepository;
+    }
+
+    private boolean isAuthenticated() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || AnonymousAuthenticationToken.class.
+                isAssignableFrom(authentication.getClass())) {
+            return false;
+        }
+        return authentication.isAuthenticated();
     }
 
     @GetMapping("/register")
     public String registerForm(Model model){
-        if(LoginState.isIsAuthenticated()){
-            UserEntry userEntry = LoginState.getUserEntry();
-            model.addAttribute("userEntry", userEntry);
-            return "dashboard";
+        if(isAuthenticated()){
+            return "redirect:dashboard";
         }
         model.addAttribute("userRegisterInput", new UserRegisterInput());
         model.addAttribute("alertType", "info");
@@ -50,11 +61,9 @@ public class RegisterWebController {
         }
         String pass = userRegisterInput.getPassword();
         String cnfPass = userRegisterInput.getConfirmPassword();
-        if(isNewUser && pass.equals(cnfPass)){
-            userService.addUser(userRegisterInput);
+        if(isNewUser && pass.equals(cnfPass) && userService.addUser(userRegisterInput)){
             model.addAttribute("userLoginInput", new UserLoginInput());
-            model.addAttribute("alertType", "success");
-            model.addAttribute("alertMessage", "Successfully Registered! Please Log In.");
+            model.addAttribute("registerSuccess", "true");
             return "login";
         }
         model.addAttribute("userRegisterInput", new UserRegisterInput());

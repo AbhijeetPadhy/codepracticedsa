@@ -9,9 +9,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class IndexWebController {
     @GetMapping("/")
     public String indexPage(Model model){
-        model.addAttribute("isAuthenticated", LoginState.isIsAuthenticated());
-        UserEntry userEntry = LoginState.getUserEntry();
-        model.addAttribute("userEntry", userEntry);
         return "index";
     }
 }

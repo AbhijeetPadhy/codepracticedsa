@@ -52,11 +52,15 @@
                         <div class="sb-nav-link-icon"><i class="fa-solid fa-code"></i></div>
                         My Submissions
                     </a>
+                    <a class="nav-link" href="/submitcode">
+                        <div class="sb-nav-link-icon"><i class="fa-solid fa-code"></i></div>
+                        Submit New Code
+                    </a>
                 </div>
             </div>
             <div class="sb-sidenav-footer">
                 <div class="small">Logged in as:</div>
-                <div th:text="${userEntry.firstName} + ' ' + ${userEntry.lastName}"></div>
+                <div th:text="${firstName} + ' ' + ${lastName}"></div>
             </div>
         </nav>
     </div>

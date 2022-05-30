@@ -20,17 +20,24 @@
                                 <div class="card shadow-lg border-0 rounded-lg mt-5">
                                     <div class="card-header"><h3 class="text-center font-weight-light my-4">Login</h3></div>
                                     <div class="card-body">
-                                        <form th:action="@{/login}" th:object="${userLoginInput}" method="post">
-                                            <div class="row mb-3">
-                                                <div th:class="'alert alert-' + ${alertType}" role="alert" th:text="${alertMessage}"></div>
+                                        <form th:action="@{/login}" method="post">
+                                            <div th:if="${param.error}">
+                                                <div class="alert alert-danger">
+                                                    Invalid username or password.
+                                                </div>
+                                            </div>
+                                            <div th:if="${registerSuccess}">
+                                                <div class="alert alert-success">
+                                                    User Successfully Registered
+                                                </div>
                                             </div>
                                             <div class="form-floating mb-3">
-                                                <input class="form-control" id="inputEmail" type="email" placeholder="name@example.com" th:field="*{email}"/>
-                                                <label for="inputEmail">Email address</label>
+                                                <input class="form-control" id="username" name="username" type="email" placeholder="name@example.com"/>
+                                                <label for="username">Email address</label>
                                             </div>
                                             <div class="form-floating mb-3">
-                                                <input class="form-control" id="inputPassword" type="password" placeholder="Password" th:field="*{password}"/>
-                                                <label for="inputPassword">Password</label>
+                                                <input class="form-control" id="password" name="password" type="password" placeholder="Password"/>
+                                                <label for="password">Password</label>
                                             </div>
                                             <div class="form-check mb-3">
                                                 <input class="form-check-input" id="inputRememberPassword" type="checkbox" value="" />
@@ -43,7 +50,7 @@
                                         </form>
                                     </div>
                                     <div class="card-footer text-center py-3">
-                                        <div class="small"><a href="register.html">Need an account? Sign up!</a></div>
+                                        <div class="small"><a href="register">Need an account? Sign up!</a></div>
                                     </div>
                                 </div>
                             </div>
